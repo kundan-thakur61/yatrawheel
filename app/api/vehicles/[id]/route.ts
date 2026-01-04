@@ -4,12 +4,12 @@ import VehicleModel from '../../../../models/Vehicle';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
 
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // Validate ID format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -55,12 +55,12 @@ export async function GET(
 // PUT route to update vehicle (for owners/admins)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
     // Validate ID format
@@ -105,12 +105,12 @@ export async function PUT(
 // DELETE route to delete vehicle (for owners/admins)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await dbConnect();
 
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // Validate ID format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
